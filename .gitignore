@@ -1,0 +1,5 @@
+.idea/
+.python-version
+config.yml
+logs/
+**/__pycache__/
