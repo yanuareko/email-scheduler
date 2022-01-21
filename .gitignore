@@ -3,3 +3,4 @@
 config.yml
 logs/
 **/__pycache__/
+migrations/

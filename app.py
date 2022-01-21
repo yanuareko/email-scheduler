@@ -1,31 +1,32 @@
-from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
+from flask import render_template, Flask
 from waitress import serve
-from modules.config import load_config
-from modules.create_app import create_app
-from modules.create_logger import create_logger
-from modules.request import handle_request
+from modules.configure import configure_app, configure_celery_app, configure_extension
+from modules.api_request import handle_request
+from modules.extensions import celery
 
 
-# get application config & db config value from config.yml
-app_cfg: dict = load_config("./config.yml")["application"]
-db_cfg: dict = load_config("./config.yml")["database"]
+def create_app() -> Flask:
+    """To initialize flask app"""
+    # init Flask
+    flask_app: Flask = Flask("email-scheduler", template_folder='templates')
+    flask_app.url_map.strict_slashes = False
 
-# logging
-logger = create_logger(app_cfg["log_folder"])
+    configure_app(flask_app)
+    configure_celery_app(flask_app, celery)
+    configure_extension(flask_app)
 
-# init Flask
-app = create_app(app_cfg, db_cfg)
+    return flask_app
 
-# use Api from flask_restful
-api = Api(app)
-db = SQLAlchemy(app)
-handle_request(api, app_cfg, logger, db)
+
+app = create_app()
+celery.conf.update(app.config)
+
+handle_request(app)
 
 if __name__ == "__main__":
-    environment = app_cfg["env"]
-    print(f"""Running Backend with {environment} environment, port: {app_cfg["port"]}\n""")
+    environment = app.config["ENV"]
+    print(f"""Running Backend with {environment} environment, port: {app.config["port"]}\n""")
     if environment == "production":
-        serve(app, host="0.0.0.0", port=app_cfg["port"], threads=8)
+        serve(app, host="0.0.0.0", port=app.config["port"], threads=8)
     else:
-        app.run(host="0.0.0.0", debug=app_cfg["testing"], port=app_cfg["port"], threaded=True)
+        app.run(host="0.0.0.0", debug=app.config["TESTING"], port=app.config["port"], threaded=True)
