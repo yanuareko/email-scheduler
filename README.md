@@ -1,4 +1,8 @@
 # email-scheduler
+### Preparation:
+1. Install PostgreSQL, run and initiate DB named: **email_scheduler**
+2. Make sure DB **email_scheduler** is accessible via network
+3. Install and run **Redis**
 
 ### How to run backend app:
 1. make sure using python 3.7+ (I used 3.7.12)
