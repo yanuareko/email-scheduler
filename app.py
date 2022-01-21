@@ -1,4 +1,4 @@
-from flask import render_template, Flask
+from flask import Flask
 from waitress import serve
 from modules.configure import configure_app, configure_celery_app, configure_extension
 from modules.api_request import handle_request

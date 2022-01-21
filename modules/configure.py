@@ -30,6 +30,7 @@ def configure_app(app):
     # Celery config
     app.config['broker_url']: str = celery_config['broker_url']
     app.config['result_backend']: str = celery_config['result_backend']
+    app.config['timezone']: str = celery_config['timezone']
     # Mail server config
     app.config['MAIL_SERVER'] = mail_config['server']
     app.config['MAIL_PORT'] = mail_config['port']
@@ -37,9 +38,6 @@ def configure_app(app):
     app.config['MAIL_USERNAME'] = mail_config['username']
     app.config['MAIL_PASSWORD'] = mail_config['password']
     app.config['MAIL_DEFAULT_SENDER'] = mail_config['default_sender']
-
-    # TODO: tobe delete
-    app.config['EXPLAIN_TEMPLATE_LOADING'] = True
 
 
 def configure_celery_app(app, celery):
@@ -67,5 +65,3 @@ def configure_extension(app):
     # Flask-Migrate
     migrate.init_app(app, db)
 
-    # Todo: tobe delete
-    print('configure_extension is called')

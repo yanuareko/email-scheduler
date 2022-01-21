@@ -35,8 +35,8 @@ class CreateEvent(Resource):
                 attendee_id = attendee.save_to_db()
                 if not attendee_id:
                     # attendee_id already exist, get id instead
-                    _result = attendee.find_by_attendee_name(data[0]).__dict__
-                    attendee_id = _result['id']
+                    _result = attendee.find_by_attendee_name(data[0])
+                    attendee_id = _result.id
                 attendee_ids.append(attendee_id)
 
         # add to table EventAttendees

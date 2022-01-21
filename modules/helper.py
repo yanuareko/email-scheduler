@@ -1,3 +1,6 @@
+import re
+
+
 def non_empty_string(s):
     """Used by reqparse module, to check weather the value is empty string or not
     :param s: any
@@ -16,3 +19,10 @@ def extract_arguments(args: dict) -> tuple:
     :return: tuple of values from args
     """
     return tuple([val for val in args.values()])
+
+
+def wanted_time_format(text: any) -> any:
+    result = re.findall(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})", str(text))
+    if not result:
+        raise ValueError("Format not match, example: 2006-01-02T15:04:05")
+    return text
