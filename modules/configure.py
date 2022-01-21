@@ -19,6 +19,7 @@ def configure_app(app):
     # put config value to Flask app
     app.config["TESTING"]: bool = app_config["testing"]
     app.config["ENV"]: str = app_config["env"]
+    app.config["SECRET_KEY"]: str = "iSdu38sadf"
     app.config['port']: int = app_config["port"]
     app.config['base_api_url']: int = app_config["base_api_url"]
     app.config['log_folder']: int = app_config["log_folder"]

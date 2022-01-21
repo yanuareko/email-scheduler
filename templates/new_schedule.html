@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Event</title>
+</head>
+<body>
+    <h1>{{event_name}}</h1>
+    &nbsp;{% block content %}{% endblock %}
+    <hr/>
+<button onclick="window.location.href='/manage/{{event_id}}';">Cancel</button>
+
+</body>
+</html>

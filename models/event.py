@@ -22,6 +22,10 @@ class Event(db.Model):
             return self.id
 
     @classmethod
+    def get_all_events(cls):
+        return cls.query.all()
+
+    @classmethod
     def delete_by_event_id(cls, event_id):
         try:
             cls.query.filter_by(id=event_id).delete()
@@ -36,5 +40,5 @@ class Event(db.Model):
         return True
 
     @classmethod
-    def find_by_event_name(cls, event_name):
-        return cls.query.filter_by(event_name=event_name).first()
+    def find_by_event_id(cls, event_id):
+        return cls.query.filter_by(id=event_id).first()

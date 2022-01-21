@@ -1,12 +1,14 @@
-from flask import make_response, jsonify
+import datetime as dt
+from flask import make_response, jsonify, render_template, session
 from flask_restful import Resource, reqparse
+from models.schedule_email import ScheduledEmail
 from modules.helper import non_empty_string, extract_arguments
 from models.event import Event
 from models.attendees import Attendees
 from models.event_attendees import EventAttendees
 
 
-class CreateEvent(Resource):
+class PostCreateEvent(Resource):
     def post(self):
         parser = reqparse.RequestParser(bundle_errors=True)
         parser.add_argument('event_name', type=non_empty_string, location='form',
@@ -45,3 +47,30 @@ class CreateEvent(Resource):
             event_attendee.save_to_db()
 
         return make_response(jsonify({"event_id": event_id}), 200)
+
+
+class GetManageEvent(Resource):
+    def __init__(self):
+        pass
+
+    def get(self, event_id=0):
+        event = Event()
+        result = event.find_by_event_id(event_id)
+        session['event_id'] = event_id
+
+        schedule_email = ScheduledEmail()
+        all_schedules = []
+        for sch in schedule_email.find_by_event_id(event_id):
+            all_schedules.append({
+                'id': sch.id,
+                'subject': sch.subject,
+                'content': sch.content,
+                'timestamp': sch.timestamp.strftime("%Y-%m-%dT%H:%S:%M")
+            })
+
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('manage_event.html',
+                                             event_name=result.event_name,
+                                             event_description=result.event_description,
+                                             schedules=all_schedules,
+                                             event_id=event_id), 200, headers)

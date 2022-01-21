@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Event</title>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+</style>
+    <script>
+
+        function newSchedule(){
+            var e_id = {{event_id}}
+            localStorage.setItem('event_id', e_id);
+            window.location.href='/save_emails';
+        }
+    </script>
+</head>
+<body>
+    <h2>{{event_name}}</h2>
+    <div>
+        <label>Description:</label>
+        <label>"{{event_description}}"</label>
+    </div>
+<hr/>
+    <label>Scheduled Email:</label>
+    <table >
+        <tr>
+            <td>id</td>
+            <td>subject</td>
+            <td>content</td>
+            <td>timestamp</td>
+        </tr>
+        {% for sch in schedules %}
+            <tr>
+                <td>{{sch.id}}</td>
+                <td>{{sch.subject}}</td>
+                <td>{{sch.content}}</td>
+                <td>{{sch.timestamp}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <hr/>
+<div>
+    <button onclick="window.location.href='/';">Back to home</button>
+    <button onclick=newSchedule()>Create new schedule</button>
+</div>
+</body>
+</html>
