@@ -3,10 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Manage Event</title>
+    <script>
+        window.onload = function(){
+            document.getElementById("submit").disabled  = true;
+
+            let subject = document.getElementById("subject");
+            let content = document.getElementById("content");
+            let timestamp = document.getElementById("timestamp");
+
+            window.addEventListener("keyup", function(e) {
+                console.log(subject.value === "")
+                if(subject.value === "" || content.value === "" || timestamp.value === ""){
+                    document.getElementById("submit").disabled = true;
+                } else {
+                    document.getElementById("submit").disabled = false;
+                }
+
+            }, true);
+        }
+    </script>
 </head>
 <body>
-    <h1>{{event_name}}</h1>
-    &nbsp;{% block content %}{% endblock %}
+    <h1>{{title}}</h1>
+    <h3>New Email Schedule</h3>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.subject.label }}<br>
+            {{ form.subject(size=32) }}
+        </p>
+        <p>
+            {{ form.content.label }}<br>
+            {{ form.content(size=32) }}
+        </p>
+        <p>
+            {{ form.timestamp.label }}<br>
+            {{ form.timestamp(size=32) }}
+        </p>
+
+        <p>{{ form.submit() }}</p>
+    </form>
     <hr/>
 <button onclick="window.location.href='/manage/{{event_id}}';">Cancel</button>
 

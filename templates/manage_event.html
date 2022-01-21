@@ -22,10 +22,8 @@ tr:nth-child(even) {
 
 </style>
     <script>
-
         function newSchedule(){
-            var e_id = {{event_id}}
-            localStorage.setItem('event_id', e_id);
+            localStorage.setItem('event_id', {{event_id}});
             window.location.href='/save_emails';
         }
     </script>
@@ -33,10 +31,15 @@ tr:nth-child(even) {
 <body>
     <h2>{{event_name}}</h2>
     <div>
-        <label>Description:</label>
+        <label><b>Description:</b></label>
         <label>"{{event_description}}"</label>
     </div>
-<hr/>
+    <hr/>
+    <div>
+        <label><b>Attendees:</b></label>
+        <label>{{event_attendees}}</label>
+    </div>
+    <hr/>
     <label>Scheduled Email:</label>
     <table >
         <tr>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function addFieldAttendee(){
+            let p_name = document.createElement("p");
+            p_name.innerHTML = '{{ ev_form.attendee_name.label }} ' +
+                               '{{ ev_form.attendee_name(size=32) }} ' +
+                               '{{ ev_form.attendee_email.label }} ' +
+                               '{{ ev_form.attendee_email(size=32) }}'
+            document.getElementById("attendee_container").appendChild(p_name);
+        }
+    </script>
+</head>
+<body>
+    <h1>New Event</h1>
+    <form action="" method="post" novalidate>
+        {{ ev_form.hidden_tag() }}
+        <p>
+            {{ ev_form.event_name.label }}<br>
+            {{ ev_form.event_name(size=32) }}
+        </p>
+        <p>
+            {{ ev_form.event_description.label }}<br>
+            {{ ev_form.event_description(size=32) }}
+        </p>
+        <div id="attendee_container">
+            <p>
+                {{ ev_form.attendee_name.label }}
+                {{ ev_form.attendee_name(size=32) }}
+                {{ ev_form.attendee_email.label }}
+                {{ ev_form.attendee_email(size=32) }}
+            </p>
+        </div>
+        <button type="button" onclick="addFieldAttendee()">Add Attendee</button>
+
+        <div style="display: flex;">
+            <p>{{ ev_form.submit() }}</p>
+            <button
+                    style="margin-left: 400px; margin-top: 12px; height: 29px; background: salmon;"
+                    type="button" onclick="window.location.href='/';">cancel
+            </button>
+        </div>
+    </form>
+</body>
+</html>
