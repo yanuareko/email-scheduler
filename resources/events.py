@@ -1,7 +1,7 @@
 import datetime as dt
 from flask import make_response, jsonify, render_template, session, request
 from flask_restful import Resource, reqparse
-from db_controller.query import get_recipients_email_n_name
+from db_controller.query import get_recipients_emails_n_name
 from models.schedule_email import ScheduledEmail
 from modules.helper import non_empty_string, extract_arguments
 from models.event import Event
@@ -83,7 +83,7 @@ class GetManageEvent(Resource):
                 'timestamp': sch.timestamp.strftime("%Y-%m-%dT%H:%M")
             })
 
-        attendees = ', '.join([f"{item[0]} [{item[1]}]" for item in get_recipients_email_n_name(event_id)])
+        attendees = ', '.join([f"{item[0]} [{item[1]}]" for item in get_recipients_emails_n_name(event_id)])
 
         headers = {'Content-Type': 'text/html'}
         return make_response(render_template('manage_event.html',

@@ -18,6 +18,6 @@ def get_recipients_emails(event_id) -> list:
     return [recipient.attendee_email for recipient, _, _ in results]
 
 
-def get_recipients_email_n_name(event_id) -> list:
+def get_recipients_emails_n_name(event_id) -> list:
     results = get_recipients(event_id)
     return [(recipient.attendee_name, recipient.attendee_email)for recipient, _, _ in results]

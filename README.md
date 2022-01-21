@@ -16,3 +16,6 @@ and create the tables
 
 ### How to run celery worker
 `celery -A app.celery worker --loglevel=info -E`
+
+### Running test
+`python -m pytest tests/`
